@@ -78,10 +78,10 @@ def add_member():
         "success": "Family Member created"
         }), 200
 
-@app.route('/member/<int:member_id>', methods=['PUT'])     
-def update_member(member_id):   
+@app.route('/member/<int:id>', methods=['PUT'])     
+def update_member(id):   
 
-    member = jackson_family.get.member(id)
+    member = jackson_family.get_member(id)
     first_name = request.json.get('first_name')
     last_name = "Jackson"
     age = request.json.get('age')
@@ -103,6 +103,10 @@ def update_member(member_id):
         return jsonify({
             "message": "Lucky number(s) is/are required"
          }), 400
+    if not id:
+        return jsonify({
+            "message": "no member has been found"
+        }), 400
 
     member['first_name'] = first_name
     member['last_name'] = last_name
